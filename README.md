@@ -180,12 +180,13 @@ npm run lint:fix
   - `types/` - Definiciones de tipos TypeScript
   - `test/` - Tests unitarios y de integración
 
-### Estilos (TailwindCSS)
+### Estilos (CSS Puro)
 - `resources/css/` - **Estilos de la aplicación**
-  - `app.css` - Archivo principal con configuración de Tailwind
-  - `components/` - Estilos específicos por componente
-  - `pages/` - Estilos específicos por página
-  - `utils/` - Clases CSS utilitarias personalizadas
+  - `app.css` - Archivo principal con variables globales y reset CSS
+  - `components/` - Componentes CSS (botones, cards, modals, alerts)
+  - `utils/` - Clases utilitarias (spacing, text, layout, flexbox)
+  - **Sistema de diseño**: Variables CSS para colores, tipografías y espaciado
+  - **CSS Modular**: Organizado por componentes y funcionalidades
 
 ### Templates
 - `resources/views/` - Plantillas Blade (integración Laravel-React)
@@ -200,7 +201,7 @@ npm run lint:fix
 ### Tecnologías Frontend
 - **React 19.1.0** - Librería de interfaz de usuario
 - **TypeScript 5.8.3** - Superset tipado de JavaScript
-- **TailwindCSS 4.0.0** - Framework CSS utility-first
+- **CSS Puro** - Sistema de diseño modular sin frameworks
 - **Vite 6.2.4** - Build tool y dev server ultrarrápido
 - **Vitest 3.2.3** - Framework de testing unitario
 - **Axios 1.8.2** - Cliente HTTP para APIs
@@ -260,7 +261,7 @@ import { ApiService } from '@/services/ApiService';
 ### Frontend (React + TypeScript)
 ✅ React 19.1.0 configurado e instalado  
 ✅ TypeScript 5.8.3 con configuración optimizada  
-✅ TailwindCSS 4.0.0 configurado y funcionando  
+✅ CSS Puro configurado con sistema de diseño modular  
 ✅ Vite 6.2.4 como build tool y dev server  
 ✅ Estructura de directorios frontend organizada  
 ✅ Alias de imports configurados (@/...)  
