@@ -241,18 +241,12 @@ Eunoia/
 - **Tipado estricto**: Interfaces para props, API responses, modelos
 - **Paths absolutos**: Imports limpia con `@/` y configuración tsconfig
 - **Global types**: Definiciones compartidas en `resources/js/types/`
+
+#### Configuración de Build
 - `vite.config.js` - Configuración del bundler Vite
 - `tsconfig.json` - Configuración TypeScript para frontend
 - `tsconfig.node.json` - Configuración TypeScript para herramientas
 - `package.json` - Dependencias y scripts de Node.js
-
-### Tecnologías Frontend
-- **React 19.1.0** - Librería de interfaz de usuario
-- **TypeScript 5.8.3** - Superset tipado de JavaScript
-- **CSS Puro** - Sistema de diseño modular sin frameworks
-- **Vite 6.2.4** - Build tool y dev server ultrarrápido
-- **Vitest 3.2.3** - Framework de testing unitario
-- **Axios 1.8.2** - Cliente HTTP para APIs
 
 ## Convenciones y Patrones Frontend
 
@@ -281,28 +275,28 @@ components/
 
 ## Estado del Proyecto
 
-### ✅ Backend Configurado
+### Backend
 - Laravel 12.18.0 instalado y optimizado
 - PHP 8.3+ con extensiones requeridas
 - MySQL 8.0 como base de datos principal
 - Redis para cache y sesiones
 - Artisan commands funcionando correctamente
 
-### ✅ Frontend Configurado  
+### Frontend
 - React 18+ con TypeScript estricto
 - Vite como build tool con HMR
 - Inertia.js para integración Laravel-React
 - Sistema de diseño CSS modular
 - Tipos TypeScript globales definidos
 
-### ✅ Entorno de Desarrollo
+### Entorno de Desarrollo
 - Docker Compose con servicios optimizados
 - Scripts PowerShell para gestión rápida
 - Hot Module Replacement (HMR) funcionando
 - Volúmenes persistentes para base de datos
 - phpMyAdmin para administración de BD
 
-### ✅ Herramientas de Desarrollo
+### Herramientas de Desarrollo
 - TypeScript configurado con paths absolutos
 - ESLint + Prettier para código consistente
 - VS Code settings optimizadas
@@ -484,71 +478,8 @@ docker ps | findstr mysql
 
 ## Próximos Pasos
 
-### Desarrollo Backend
-- [ ] Configurar modelos Eloquent principales
-- [ ] Implementar sistema de autenticación
-- [ ] Crear APIs RESTful
-- [ ] Configurar migraciones y seeders
-
-### Desarrollo Frontend  
-- [ ] Implementar componentes UI principales
-- [ ] Configurar gestión de estado (Context/Zustand)
-- [ ] Integrar formularios con validación
-- [ ] Implementar sistema de navegación
-
-### DevOps y Producción
-- [ ] Configurar pipeline CI/CD
-- [ ] Optimizar Dockerfile para producción
-- [ ] Configurar SSL/HTTPS
-- [ ] Implementar monitoreo y logging
-
-## Recursos y Documentación
-
-### Documentación Oficial
-- [Laravel 12 Documentation](https://laravel.com/docs/12.x)
-- [React 18 Documentation](https://react.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Vite Guide](https://vitejs.dev/guide/)
-- [Inertia.js Documentation](https://inertiajs.com)
-
-### Stack y Herramientas
-- [Docker Compose Reference](https://docs.docker.com/compose/)
-- [MySQL 8.0 Reference](https://dev.mysql.com/doc/refman/8.0/en/)
-- [Redis Documentation](https://redis.io/docs/)
-
----
-
-**Eunoia** - Desarrollado con ❤️ usando las mejores prácticas de desarrollo web moderno.  
-✅ TypeScript 5.8.3 con configuración optimizada  
-✅ CSS Puro configurado con sistema de diseño modular  
-✅ Vite 6.2.4 como build tool y dev server  
-✅ Estructura de directorios frontend organizada  
-✅ Alias de imports configurados (@/...)  
-✅ Testing setup con Vitest 3.2.3  
-✅ Linting configurado con Oxlint  
-✅ Dependencias de npm instaladas y actualizadas  
-
-### Infraestructura (Docker)
-✅ Docker Desktop configurado y funcionando  
-✅ MySQL 8.0 ejecutándose en Docker (Puerto 3306)  
-✅ Redis 7.4.4 ejecutándose en Docker (Puerto 6379)  
-✅ phpMyAdmin accesible en http://localhost:8080  
-✅ Conectividad Redis verificada (PING/PONG funcionando)  
-✅ Base de datos MySQL operativa y saludable  
-✅ Dockerfile optimizado y libre de vulnerabilidades  
-✅ Script de verificación de servicios (`verify-services.ps1`)  
-✅ Documentación completa para Redis CLI y phpMyAdmin  
-
-**Servicios verificados y funcionando:**
-- **Redis**: Respondiendo correctamente, CLI accesible
-- **MySQL**: Conexión estable, base de datos 'eunoia' creada
-- **phpMyAdmin**: Interfaz web accesible, conectado a MySQL
-- **Puertos**: 3306, 6379, 8080 operativos
-
-## Próximos Pasos
-
 ### Backend
-1. ✅ ~~Configurar una base de datos (MySQL, PostgreSQL, etc.)~~ - **Completado con Docker**
+1. ✅ ~~Configurar base de datos (MySQL, PostgreSQL, etc.)~~ - **Completado con Docker**
 2. Ejecutar migraciones: `php artisan migrate`
 3. Configurar autenticación si es necesario
 4. Configurar Redis para cache y colas de trabajo
@@ -566,12 +497,62 @@ docker ps | findstr mysql
 8. Implementar testing unitario para componentes
 9. Configurar PWA (Progressive Web App) si es necesario
 
+### DevOps y Producción
+- [ ] Configurar pipeline CI/CD
+- [ ] Optimizar Dockerfile para producción
+- [ ] Configurar SSL/HTTPS
+- [ ] Implementar monitoreo y logging
+
 ### Integración
 1. Conectar frontend React con APIs de Laravel
 2. Implementar manejo de errores global
 3. Configurar interceptors para autenticación
 4. Optimizar build para producción
 5. Configurar CI/CD pipeline
+
+## Recursos y Documentación
+
+### Documentación Oficial
+- [Laravel 12 Documentation](https://laravel.com/docs/12.x)
+- [React 18 Documentation](https://react.dev)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Vite Guide](https://vitejs.dev/guide/)
+- [Inertia.js Documentation](https://inertiajs.com)
+
+### Stack y Herramientas
+- [Docker Compose Reference](https://docs.docker.com/compose/)
+- [MySQL 8.0 Reference](https://dev.mysql.com/doc/refman/8.0/en/)
+- [Redis Documentation](https://redis.io/docs/)
+
+---
+
+**Eunoia** - Desarrollado usando las mejores prácticas de desarrollo web moderno.
+
+### Configuración Completa
+- TypeScript 5.8.3 con configuración optimizada  
+- CSS Puro configurado con sistema de diseño modular  
+- Vite 6.2.4 como build tool y dev server  
+- Estructura de directorios frontend organizada  
+- Alias de imports configurados (@/...)  
+- Testing setup con Vitest 3.2.3  
+- Linting configurado con Oxlint  
+
+### Infraestructura Docker
+- Docker Desktop configurado y funcionando  
+- MySQL 8.0 ejecutándose (Puerto 3306)  
+- Redis 7.4.4 ejecutándose (Puerto 6379)  
+- phpMyAdmin accesible en http://localhost:8080  
+- Conectividad Redis verificada (PING/PONG funcionando)  
+- Base de datos MySQL operativa y saludable  
+- Dockerfile optimizado y libre de vulnerabilidades  
+- Script de verificación de servicios (`verify-services.ps1`)  
+- Documentación completa para Redis CLI y phpMyAdmin  
+
+### Servicios Verificados
+- **Redis**: Respondiendo correctamente, CLI accesible
+- **MySQL**: Conexión estable, base de datos 'eunoia' creada
+- **phpMyAdmin**: Interfaz web accesible, conectado a MySQL
+- **Puertos**: 3306, 6379, 8080 operativos  
 
 ---
 
@@ -581,135 +562,4 @@ docker ps | findstr mysql
 **MySQL:** 8.0.42  
 **Redis:** 7.4.4  
 **Fecha de instalación:** 17 de junio de 2025  
-**Última actualización:** 17 de junio de 2025 - Configuración Docker completada
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-## Desarrollo con Docker 🐳
-
-Este proyecto incluye una configuración Docker completa para un entorno de desarrollo unificado.
-
-### Servicios Incluidos
-
-- **Laravel App**: Puerto 8000 (con supervisord para manejar Laravel + Vite)
-- **Vite Dev Server**: Puerto 3000 (Hot Module Replacement)
-- **MySQL 8.0**: Puerto 3306
-- **Redis 7**: Puerto 6379
-- **phpMyAdmin**: Puerto 8080
-
-### Inicio Rápido con Docker
-
-1. **Ejecutar el script de inicio:**
-   ```powershell
-   .\start-docker.ps1
-   ```
-
-2. **O manualmente:**
-   ```bash
-   docker-compose up --build -d
-   ```
-
-3. **Acceder a la aplicación:**
-   - Laravel: http://localhost:8000
-   - Vite Dev: http://localhost:3000
-   - phpMyAdmin: http://localhost:8080
-
-### Scripts de Docker Disponibles
-
-- `start-docker.ps1` - Inicia todo el entorno Docker
-- `stop-docker.ps1` - Detiene el entorno Docker
-- `clean-docker.ps1` - Limpia contenedores y volúmenes
-
-### Comandos Make (opcional)
-
-Si tienes `make` instalado:
-
-```bash
-make up      # Iniciar servicios
-make down    # Detener servicios
-make logs    # Ver logs
-make shell   # Acceder al contenedor
-make clean   # Limpiar todo
-```
-
-### Configuración de Entorno para Docker
-
-El proyecto incluye `.env.docker` con configuraciones optimizadas para Docker. Las principales diferencias son:
-
-- `DB_HOST=mysql` (nombre del servicio Docker)
-- `REDIS_HOST=redis` (nombre del servicio Docker)
-- `CACHE_STORE=redis` (usar Redis para caché)
-
-### Desarrollo en Docker
-
-Cuando desarrolles con Docker:
-
-1. **Hot Reload**: Vite está configurado con polling para detectar cambios de archivos
-2. **Volúmenes**: El código está montado como volumen para desarrollo en tiempo real
-3. **Logs**: Usa `docker-compose logs -f app` para ver logs en tiempo real
-4. **Ejecutar comandos**: `docker-compose exec app php artisan [comando]`
-
-### Resolución de Problemas Docker
-
-**Si el contenedor no inicia:**
-```bash
-docker-compose logs app
-```
-
-**Si hay problemas de permisos:**
-```bash
-docker-compose exec app chown -R 9999:9999 /var/www/html/storage
-```
-
-**Si Redis no conecta:**
-```bash
-docker-compose exec app php artisan tinker
->>> Redis::ping()
-```
+**Última actualización:** 17 de junio de 2025
