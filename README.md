@@ -117,6 +117,36 @@ npm run dev
 npm run build
 ```
 
+### Scripts de desarrollo frontend disponibles
+```bash
+# Desarrollo con hot reload
+npm run dev
+
+# Build para producción
+npm run build
+
+# Preview del build de producción
+npm run preview
+
+# Verificación de tipos TypeScript
+npm run type-check
+
+# Tests unitarios
+npm run test
+
+# Tests con interfaz visual
+npm run test:ui
+
+# Tests con cobertura de código
+npm run test:coverage
+
+# Linting de código
+npm run lint
+
+# Corrección automática de linting
+npm run lint:fix
+```
+
 ## Comandos Útiles
 
 - **Limpiar caché:** `php artisan cache:clear`
@@ -128,36 +158,152 @@ npm run build
 
 ## Estructura del Proyecto
 
+### Backend (Laravel)
 - `app/` - Código de la aplicación (controladores, modelos, etc.)
-- `routes/` - Definición de rutas
-- `resources/views/` - Plantillas Blade
-- `resources/css/` y `resources/js/` - Assets del frontend
-- `database/` - Migraciones y seeders
-- `config/` - Archivos de configuración
+- `routes/` - Definición de rutas de la API y web
+- `database/` - Migraciones, seeders y factories
+- `config/` - Archivos de configuración de Laravel
+- `storage/` - Archivos de almacenamiento, logs y caché
+- `bootstrap/` - Archivos de arranque de Laravel
+
+### Frontend (React + TypeScript)
+- `resources/js/` - **Código principal del frontend React**
+  - `app.js` - Punto de entrada principal de la aplicación
+  - `bootstrap.js` - Configuración inicial (Axios, etc.)
+  - `components/` - Componentes React reutilizables
+  - `pages/` - Componentes de páginas/vistas principales
+  - `layouts/` - Plantillas de diseño (headers, footers, sidebars)
+  - `hooks/` - Custom hooks de React
+  - `context/` - Contextos de React (estado global)
+  - `services/` - Servicios para APIs y llamadas HTTP
+  - `utils/` - Funciones utilitarias y helpers
+  - `types/` - Definiciones de tipos TypeScript
+  - `test/` - Tests unitarios y de integración
+
+### Estilos (TailwindCSS)
+- `resources/css/` - **Estilos de la aplicación**
+  - `app.css` - Archivo principal con configuración de Tailwind
+  - `components/` - Estilos específicos por componente
+  - `pages/` - Estilos específicos por página
+  - `utils/` - Clases CSS utilitarias personalizadas
+
+### Templates
+- `resources/views/` - Plantillas Blade (integración Laravel-React)
+  - `welcome.blade.php` - Plantilla principal de bienvenida
+
+### Configuración Frontend
+- `vite.config.js` - Configuración del bundler Vite
+- `tsconfig.json` - Configuración TypeScript para frontend
+- `tsconfig.node.json` - Configuración TypeScript para herramientas
+- `package.json` - Dependencias y scripts de Node.js
+
+### Tecnologías Frontend
+- **React 19.1.0** - Librería de interfaz de usuario
+- **TypeScript 5.8.3** - Superset tipado de JavaScript
+- **TailwindCSS 4.0.0** - Framework CSS utility-first
+- **Vite 6.2.4** - Build tool y dev server ultrarrápido
+- **Vitest 3.2.3** - Framework de testing unitario
+- **Axios 1.8.2** - Cliente HTTP para APIs
+
+## Convenciones y Patrones Frontend
+
+### Organización de Componentes
+```
+components/
+├── ui/              # Componentes base (Button, Input, Modal)
+├── forms/           # Componentes de formularios
+├── navigation/      # Componentes de navegación
+└── feature/         # Componentes específicos de funcionalidades
+```
+
+### Patrones de Naming
+- **Componentes**: PascalCase (`UserProfile.tsx`)
+- **Hooks**: camelCase con prefijo 'use' (`useAuth.ts`)
+- **Services**: camelCase (`authService.ts`)
+- **Types**: PascalCase (`UserData.ts`)
+- **Utils**: camelCase (`formatDate.ts`)
+
+### Estructura de Archivos
+```javascript
+// Ejemplo de componente típico
+components/
+├── UserCard/
+│   ├── index.tsx          # Componente principal
+│   ├── UserCard.test.tsx  # Tests del componente
+│   └── styles.css         # Estilos específicos (si no se usa solo Tailwind)
+```
+
+### Flujo de Desarrollo
+1. **Desarrollo**: `npm run dev` (Vite + HMR)
+2. **Tipado**: `npm run type-check` (Verificación TypeScript)
+3. **Testing**: `npm run test` (Vitest)
+4. **Linting**: `npm run lint` (Oxlint)
+5. **Build**: `npm run build` (Producción)
+
+### Alias de Imports
+```typescript
+// Configurado en vite.config.js y tsconfig.json
+import { Button } from '@/components/ui/Button';
+import { useAuth } from '@/hooks/useAuth';
+import { ApiService } from '@/services/ApiService';
+```
 
 ## Estado Actual
 
+### Backend (Laravel)
 ✅ Laravel 12.18.0 instalado y configurado  
 ✅ Servidor de desarrollo funcionando  
 ✅ Dependencias de Composer instaladas  
-✅ Dependencias de npm instaladas  
 ✅ Archivo .env configurado  
 ✅ Clave de aplicación generada  
+
+### Frontend (React + TypeScript)
+✅ React 19.1.0 configurado e instalado  
+✅ TypeScript 5.8.3 con configuración optimizada  
+✅ TailwindCSS 4.0.0 configurado y funcionando  
+✅ Vite 6.2.4 como build tool y dev server  
+✅ Estructura de directorios frontend organizada  
+✅ Alias de imports configurados (@/...)  
+✅ Testing setup con Vitest 3.2.3  
+✅ Linting configurado con Oxlint  
+✅ Dependencias de npm instaladas y actualizadas  
+
+### Infraestructura (Docker)
 ✅ Docker Desktop configurado y funcionando  
 ✅ MySQL 8.0 ejecutándose en Docker (Puerto 3306)  
 ✅ Redis 7.4.4 ejecutándose en Docker (Puerto 6379)  
 ✅ phpMyAdmin accesible en http://localhost:8080  
 ✅ Conectividad Redis verificada  
-✅ Base de datos MySQL operativa
+✅ Base de datos MySQL operativa  
+✅ Dockerfile optimizado y libre de vulnerabilidades
 
 ## Próximos Pasos
 
+### Backend
 1. ✅ ~~Configurar una base de datos (MySQL, PostgreSQL, etc.)~~ - **Completado con Docker**
 2. Ejecutar migraciones: `php artisan migrate`
 3. Configurar autenticación si es necesario
-4. Desarrollar la funcionalidad específica del proyecto
-5. Configurar Redis para cache y colas de trabajo
-6. Implementar sistema de autenticación y autorización
+4. Configurar Redis para cache y colas de trabajo
+5. Implementar sistema de autenticación y autorización
+6. Desarrollar APIs RESTful para el frontend
+
+### Frontend
+1. Crear componente principal App.tsx (migrar de app.js)
+2. Implementar estructura de routing con React Router
+3. Desarrollar componentes UI base (Button, Input, Modal, etc.)
+4. Crear layouts principales (AppLayout, AuthLayout)
+5. Implementar sistema de autenticación en React
+6. Configurar estado global (Context API o Redux)
+7. Desarrollar páginas principales de la aplicación
+8. Implementar testing unitario para componentes
+9. Configurar PWA (Progressive Web App) si es necesario
+
+### Integración
+1. Conectar frontend React con APIs de Laravel
+2. Implementar manejo de errores global
+3. Configurar interceptors para autenticación
+4. Optimizar build para producción
+5. Configurar CI/CD pipeline
 
 ---
 
