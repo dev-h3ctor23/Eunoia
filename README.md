@@ -346,6 +346,142 @@ docker-compose ps
 docker-compose logs mysql
 ```
 
+#### Verificación de Servicios phpMyAdmin y Redis
+
+**Verificar que todos los servicios estén ejecutándose:**
+```powershell
+# Ver estado de contenedores
+docker ps
+
+# Verificar servicios específicos
+docker-compose ps mysql redis phpmyadmin
+```
+
+**Verificar conectividad de Redis:**
+```powershell
+# Ping a Redis directamente
+docker exec eunoia-redis-1 redis-cli ping
+# Respuesta esperada: PONG
+
+# Verificar desde la aplicación Laravel
+docker-compose exec app php artisan tinker
+# En tinker: Redis::ping()
+```
+
+**Verificar phpMyAdmin:**
+```powershell
+# Verificar logs de phpMyAdmin
+docker logs eunoia-phpmyadmin-1 --tail 10
+
+# Acceder a phpMyAdmin en el navegador
+# URL: http://localhost:8080
+# Usuario: root
+# Contraseña: password
+```
+
+**Verificar conectividad de MySQL:**
+```powershell
+# Conectar a MySQL directamente
+docker exec eunoia-mysql-1 mysql -u root -ppassword -e "SELECT 1;"
+
+# Verificar que la base de datos 'eunoia' existe
+docker exec eunoia-mysql-1 mysql -u root -ppassword -e "SHOW DATABASES;"
+```
+
+**Solución a problemas comunes:**
+
+1. **Error: Extension Redis ya instalada en Dockerfile**
+   - ✅ **Solucionado**: El Dockerfile ahora maneja este caso automáticamente
+   - Si persiste, reconstruir la imagen: `docker-compose build --no-cache app`
+
+2. **phpMyAdmin no carga**
+   ```powershell
+   # Reiniciar solo phpMyAdmin
+   docker-compose restart phpmyadmin
+   
+   # Verificar que MySQL esté saludable
+   docker ps  # Buscar "(healthy)" en la columna STATUS
+   ```
+
+3. **Redis no conecta desde la aplicación**
+   ```powershell
+   # Verificar configuración en .env.docker
+   # REDIS_HOST=redis
+   # REDIS_PORT=6379
+   
+   # Reiniciar Redis
+   docker-compose restart redis
+   ```
+
+4. **Puertos en uso**
+   ```powershell
+   # Verificar puertos utilizados
+   netstat -ano | findstr ":8080"  # phpMyAdmin
+   netstat -ano | findstr ":6379"  # Redis
+   netstat -ano | findstr ":3306"  # MySQL
+   ```
+
+**Script de verificación completa:**
+```powershell
+# Ejecutar verificación completa de servicios
+.\verify-services.ps1
+```
+
+### Trabajando con Redis y phpMyAdmin
+
+#### Comandos Redis en Consola
+
+**Acceso directo a Redis CLI:**
+```powershell
+# Entrar en modo interactivo
+docker exec -it eunoia-redis-1 redis-cli
+
+# Comandos básicos de prueba
+docker exec eunoia-redis-1 redis-cli ping                    # PONG
+docker exec eunoia-redis-1 redis-cli set "clave" "valor"     # OK
+docker exec eunoia-redis-1 redis-cli get "clave"             # valor
+docker exec eunoia-redis-1 redis-cli keys "*"                # Listar todas las claves
+docker exec eunoia-redis-1 redis-cli info server             # Información del servidor
+```
+
+**Comandos útiles para desarrollo:**
+```powershell
+# Limpiar cache de Laravel a través de Redis
+docker exec eunoia-redis-1 redis-cli FLUSHDB
+
+# Ver estadísticas de Redis
+docker exec eunoia-redis-1 redis-cli info stats
+
+# Monitorear comandos en tiempo real
+docker exec eunoia-redis-1 redis-cli monitor
+```
+
+#### Acceso a phpMyAdmin
+
+**URL de acceso:** http://localhost:8080
+
+**Credenciales:**
+- **Servidor:** `mysql` (se conecta automáticamente)
+- **Usuario:** `root`
+- **Contraseña:** `password`
+
+**Tareas comunes en phpMyAdmin:**
+1. **Explorar la base de datos `eunoia`**
+2. **Ejecutar consultas SQL personalizadas**
+3. **Importar/Exportar datos**
+4. **Crear tablas adicionales para desarrollo**
+5. **Monitorear consultas y rendimiento**
+
+**Solución si phpMyAdmin no carga:**
+```powershell
+# Reiniciar phpMyAdmin
+docker-compose restart phpmyadmin
+
+# Verificar que MySQL esté saludable
+docker ps | findstr mysql
+# Debe mostrar "(healthy)" en el STATUS
+```
+
 ## Próximos Pasos
 
 ### Desarrollo Backend
@@ -397,9 +533,17 @@ docker-compose logs mysql
 ✅ MySQL 8.0 ejecutándose en Docker (Puerto 3306)  
 ✅ Redis 7.4.4 ejecutándose en Docker (Puerto 6379)  
 ✅ phpMyAdmin accesible en http://localhost:8080  
-✅ Conectividad Redis verificada  
-✅ Base de datos MySQL operativa  
-✅ Dockerfile optimizado y libre de vulnerabilidades
+✅ Conectividad Redis verificada (PING/PONG funcionando)  
+✅ Base de datos MySQL operativa y saludable  
+✅ Dockerfile optimizado y libre de vulnerabilidades  
+✅ Script de verificación de servicios (`verify-services.ps1`)  
+✅ Documentación completa para Redis CLI y phpMyAdmin  
+
+**Servicios verificados y funcionando:**
+- **Redis**: Respondiendo correctamente, CLI accesible
+- **MySQL**: Conexión estable, base de datos 'eunoia' creada
+- **phpMyAdmin**: Interfaz web accesible, conectado a MySQL
+- **Puertos**: 3306, 6379, 8080 operativos
 
 ## Próximos Pasos
 

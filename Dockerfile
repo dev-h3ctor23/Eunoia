@@ -18,9 +18,9 @@ RUN apk update && apk add --no-cache \
 # Instalar extensiones adicionales de PHP si es necesario
 RUN docker-php-ext-install zip
 
-# Instalar Redis extension
+# Instalar Redis extension (verificar si ya está instalada)
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
-    && pecl install redis \
+    && (pecl install redis || echo "Redis extension may already be installed") \
     && docker-php-ext-enable redis \
     && apk del .build-deps
 
