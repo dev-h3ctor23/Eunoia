@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+README.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Node modules (se instalarán en el contenedor)
+node_modules
+npm-debug.log
+
+# Vendor (se instalarán en el contenedor)
+vendor
+
+# Cache y logs locales
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+
+# Archivos de configuración local
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE y editores
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archivos de desarrollo
+*.log
+*.pid
+*.seed
+
+# Archivos de prueba
+tests/
+phpunit.xml

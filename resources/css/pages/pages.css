@@ -22,6 +22,11 @@
     margin: 0 auto;
 }
 
+.content-centered {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 /* Página de login */
 .auth-container {
     min-height: 100vh;

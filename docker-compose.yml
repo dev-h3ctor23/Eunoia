@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+
   # Aplicación Laravel
   app:
     build:
@@ -8,22 +7,29 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+      - "3000:3000"
     volumes:
       - .:/var/www/html
       - /var/www/html/vendor
       - /var/www/html/node_modules
     environment:
       - APP_ENV=local
+      - APP_DEBUG=true
       - DB_HOST=mysql
       - DB_DATABASE=eunoia
       - DB_USERNAME=root
       - DB_PASSWORD=password
       - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RUN_MIGRATIONS=true
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - eunoia
+    restart: unless-stopped
 
   # Base de datos MySQL
   mysql:
@@ -34,10 +40,16 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: eunoia
       MYSQL_PASSWORD: password
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - eunoia
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   # Redis para cache y queues
   redis:
@@ -48,6 +60,8 @@ services:
       - redis_data:/data
     networks:
       - eunoia
+    restart: unless-stopped
+    command: redis-server --appendonly yes
 
   # PhpMyAdmin para gestión de BD
   phpmyadmin:
@@ -63,6 +77,7 @@ services:
       - mysql
     networks:
       - eunoia
+    restart: unless-stopped
 
 volumes:
   mysql_data:

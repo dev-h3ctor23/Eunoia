@@ -1,16 +1,31 @@
 # Proyecto Eunoia - Laravel 12
 
-Este es un proyecto Laravel creado con la última versión del framework (Laravel 12.18.0).
+Este es un proyecto Laravel 12 con React, TypeScript y configuración Docker completa para desarrollo moderno.
+
+## Stack Tecnológico
+
+- **Backend**: Laravel 12.18.0 + PHP 8.3.11
+- **Frontend**: React 18 + TypeScript + Vite
+- **Base de Datos**: MySQL 8.0
+- **Cache**: Redis 7
+- **Contenedores**: Docker + Docker Compose
+- **Herramientas**: Inertia.js, TailwindCSS
 
 ## Requisitos del Sistema
 
+### Desarrollo Local
 - PHP 8.3.11 o superior
 - Composer 2.8.5 o superior
-- Node.js y npm
-- Docker Desktop
-- Extensiones de PHP: bcmath, ctype, fileinfo, json, mbstring, openssl, PDO, tokenizer, xml
+- Node.js 18+ y npm
+- Extensiones PHP: bcmath, ctype, fileinfo, json, mbstring, openssl, PDO, tokenizer, xml
 
-## Instalación
+### Desarrollo con Docker (Recomendado)
+- Docker Desktop
+- Git
+
+## Instalación y Configuración
+
+### Opción 1: Desarrollo con Docker (Recomendado)
 
 1. **Clonar el repositorio:**
    ```bash
@@ -18,167 +33,172 @@ Este es un proyecto Laravel creado con la última versión del framework (Larave
    cd Eunoia
    ```
 
-2. **Instalar dependencias de PHP:**
-   ```bash
-   composer install
+2. **Iniciar entorno Docker:**
+   ```powershell
+   # En Windows
+   .\start-docker.ps1
+   
+   # O manualmente
+   docker-compose up --build -d
    ```
 
-3. **Instalar dependencias de Node.js:**
+3. **Acceder a la aplicación:**
+   - Laravel: http://localhost:8000
+   - Vite Dev Server: http://localhost:3000
+   - phpMyAdmin: http://localhost:8080
+
+### Opción 2: Desarrollo Local
+
+### Opción 2: Desarrollo Local
+
+1. **Instalar dependencias:**
    ```bash
+   composer install
    npm install
    ```
 
-4. **Configurar el archivo de entorno:**
+2. **Configurar entorno:**
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
-5. **Configurar la base de datos:**
-   Edita el archivo `.env` con tus credenciales de base de datos.
+3. **Configurar base de datos en `.env`**
 
-## Configuración con Docker
-
-Este proyecto incluye una configuración completa con Docker que incluye MySQL, Redis y phpMyAdmin.
-
-### Iniciar los servicios con Docker
-
-1. **Asegúrate de que Docker Desktop esté ejecutándose:**
+4. **Ejecutar migraciones:**
    ```bash
-   docker --version
+   php artisan migrate
    ```
 
-2. **Iniciar todos los servicios:**
+5. **Iniciar servidores:**
    ```bash
-   docker-compose up -d
+   # Terminal 1
+   php artisan serve
+   
+   # Terminal 2
+   npm run dev
    ```
 
-3. **O iniciar servicios específicos:**
-   ```bash
-   docker-compose up -d mysql redis phpmyadmin
-   ```
+## Entorno Docker
 
-### Servicios Disponibles
+### Servicios Incluidos
 
-- **MySQL 8.0**: Puerto 3306
-  - Base de datos: `eunoia`
-  - Usuario: `root`
-  - Contraseña: `password`
+| Servicio | Puerto | URL | Descripción |
+|----------|--------|-----|-------------|
+| Laravel | 8000 | http://localhost:8000 | Aplicación principal |
+| Vite HMR | 3000 | http://localhost:3000 | Hot Module Replacement |
+| MySQL | 3306 | - | Base de datos |
+| Redis | 6379 | - | Cache y sesiones |
+| phpMyAdmin | 8080 | http://localhost:8080 | Gestión BD |
 
-- **Redis 7.4.4**: Puerto 6379
-  - Usado para cache y colas de trabajo
-  - Sin autenticación por defecto
+### Scripts Docker Disponibles
 
-- **phpMyAdmin**: Puerto 8080
-  - Acceso web: http://localhost:8080
-  - Gestión de base de datos MySQL
+```powershell
+# Iniciar entorno completo
+.\start-docker.ps1
 
-### Comandos Docker Útiles
+# Detener entorno
+.\stop-docker.ps1
 
-- **Ver contenedores activos:** `docker ps`
-- **Ver logs de un servicio:** `docker-compose logs [servicio]`
-- **Detener servicios:** `docker-compose down`
-- **Reiniciar un servicio:** `docker-compose restart [servicio]`
-- **Acceder al CLI de Redis:** `docker exec -it eunoia-redis-1 redis-cli`
-- **Acceder al CLI de MySQL:** `docker exec -it eunoia-mysql-1 mysql -u root -p`
+# Limpiar entorno (elimina volúmenes)
+.\clean-docker.ps1
 
-### Verificación de Servicios
+# Desarrollo local con hot reload
+.\start-dev.ps1
+```
 
-Para verificar que todo funciona correctamente:
+### Comandos Make (Opcional)
 
 ```bash
-# Verificar Redis
-docker exec -it eunoia-redis-1 redis-cli ping
-# Debería responder: PONG
-
-# Verificar MySQL
-docker exec eunoia-mysql-1 mysqladmin -u root -ppassword ping
-# Debería responder: mysqld is alive
-
-# Ver información de Redis
-docker exec -it eunoia-redis-1 redis-cli info server
+make up      # Iniciar servicios
+make down    # Detener servicios
+make build   # Construir imágenes
+make logs    # Ver logs
+make shell   # Acceder al contenedor
+make clean   # Limpiar todo
 ```
 
 ## Desarrollo
 
-### Iniciar el servidor de desarrollo
-```bash
-php artisan serve
-```
-El servidor estará disponible en: http://127.0.0.1:8000
+### Frontend (React + TypeScript)
 
-### Compilar assets (desarrollo)
-```bash
-npm run dev
-```
-
-### Compilar assets (producción)
-```bash
-npm run build
-```
-
-### Scripts de desarrollo frontend disponibles
 ```bash
 # Desarrollo con hot reload
 npm run dev
 
-# Build para producción
+# Build para producción  
 npm run build
 
-# Preview del build de producción
+# Preview del build
 npm run preview
 
-# Verificación de tipos TypeScript
+# Verificación de tipos
 npm run type-check
 
-# Tests unitarios
+# Tests
 npm run test
-
-# Tests con interfaz visual
 npm run test:ui
-
-# Tests con cobertura de código
 npm run test:coverage
 
-# Linting de código
+# Linting
 npm run lint
-
-# Corrección automática de linting
 npm run lint:fix
 ```
 
-## Comandos Útiles
+### Backend (Laravel)
 
-- **Limpiar caché:** `php artisan cache:clear`
-- **Limpiar configuración:** `php artisan config:clear`
-- **Ver rutas:** `php artisan route:list`
-- **Crear controlador:** `php artisan make:controller NombreController`
-- **Crear modelo:** `php artisan make:model NombreModelo`
-- **Crear migración:** `php artisan make:migration crear_tabla_nombre`
+```bash
+# Servidor de desarrollo
+php artisan serve
+
+# Comandos artisan útiles
+php artisan route:list
+php artisan cache:clear
+php artisan config:clear
+php artisan make:controller NombreController
+php artisan make:model NombreModelo
+php artisan make:migration crear_tabla_nombre
+```
+
+### Variables de Entorno
+
+#### Configuración Local (`.env`)
+```env
+APP_URL=http://localhost:8000
+DB_HOST=127.0.0.1
+REDIS_HOST=127.0.0.1
+```
+
+#### Configuración Docker (`.env.docker`)
+```env
+APP_URL=http://localhost:8000
+DB_HOST=mysql
+REDIS_HOST=redis
+CACHE_STORE=redis
+```
 
 ## Estructura del Proyecto
 
-### Backend (Laravel)
-- `app/` - Código de la aplicación (controladores, modelos, etc.)
-- `routes/` - Definición de rutas de la API y web
-- `database/` - Migraciones, seeders y factories
-- `config/` - Archivos de configuración de Laravel
-- `storage/` - Archivos de almacenamiento, logs y caché
-- `bootstrap/` - Archivos de arranque de Laravel
-
-### Frontend (React + TypeScript)
-- `resources/js/` - **Código principal del frontend React**
-  - `app.js` - Punto de entrada principal de la aplicación
-  - `bootstrap.js` - Configuración inicial (Axios, etc.)
-  - `components/` - Componentes React reutilizables
-  - `pages/` - Componentes de páginas/vistas principales
-  - `layouts/` - Plantillas de diseño (headers, footers, sidebars)
-  - `hooks/` - Custom hooks de React
-  - `context/` - Contextos de React (estado global)
-  - `services/` - Servicios para APIs y llamadas HTTP
-  - `utils/` - Funciones utilitarias y helpers
-  - `types/` - Definiciones de tipos TypeScript
-  - `test/` - Tests unitarios y de integración
+```
+Eunoia/
+├── app/                    # Código Laravel (controladores, modelos)
+├── resources/
+│   ├── js/                 # Frontend React + TypeScript
+│   │   ├── Components/     # Componentes reutilizables
+│   │   ├── Pages/          # Páginas/vistas principales
+│   │   ├── types/          # Definiciones TypeScript
+│   │   ├── hooks/          # Custom hooks React
+│   │   └── utils/          # Funciones utilitarias
+│   ├── css/                # Estilos CSS
+│   └── views/              # Plantillas Blade
+├── routes/                 # Rutas web y API
+├── database/               # Migraciones y seeders
+├── docker-compose.yml      # Configuración Docker
+├── Dockerfile              # Imagen Docker personalizada
+├── vite.config.js          # Configuración Vite
+├── tsconfig.json           # Configuración TypeScript
+└── package.json            # Dependencias Node.js
+```
 
 ### Estilos (CSS Puro)
 - `resources/css/` - **Estilos de la aplicación**
@@ -364,3 +384,85 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Desarrollo con Docker 🐳
+
+Este proyecto incluye una configuración Docker completa para un entorno de desarrollo unificado.
+
+### Servicios Incluidos
+
+- **Laravel App**: Puerto 8000 (con supervisord para manejar Laravel + Vite)
+- **Vite Dev Server**: Puerto 3000 (Hot Module Replacement)
+- **MySQL 8.0**: Puerto 3306
+- **Redis 7**: Puerto 6379
+- **phpMyAdmin**: Puerto 8080
+
+### Inicio Rápido con Docker
+
+1. **Ejecutar el script de inicio:**
+   ```powershell
+   .\start-docker.ps1
+   ```
+
+2. **O manualmente:**
+   ```bash
+   docker-compose up --build -d
+   ```
+
+3. **Acceder a la aplicación:**
+   - Laravel: http://localhost:8000
+   - Vite Dev: http://localhost:3000
+   - phpMyAdmin: http://localhost:8080
+
+### Scripts de Docker Disponibles
+
+- `start-docker.ps1` - Inicia todo el entorno Docker
+- `stop-docker.ps1` - Detiene el entorno Docker
+- `clean-docker.ps1` - Limpia contenedores y volúmenes
+
+### Comandos Make (opcional)
+
+Si tienes `make` instalado:
+
+```bash
+make up      # Iniciar servicios
+make down    # Detener servicios
+make logs    # Ver logs
+make shell   # Acceder al contenedor
+make clean   # Limpiar todo
+```
+
+### Configuración de Entorno para Docker
+
+El proyecto incluye `.env.docker` con configuraciones optimizadas para Docker. Las principales diferencias son:
+
+- `DB_HOST=mysql` (nombre del servicio Docker)
+- `REDIS_HOST=redis` (nombre del servicio Docker)
+- `CACHE_STORE=redis` (usar Redis para caché)
+
+### Desarrollo en Docker
+
+Cuando desarrolles con Docker:
+
+1. **Hot Reload**: Vite está configurado con polling para detectar cambios de archivos
+2. **Volúmenes**: El código está montado como volumen para desarrollo en tiempo real
+3. **Logs**: Usa `docker-compose logs -f app` para ver logs en tiempo real
+4. **Ejecutar comandos**: `docker-compose exec app php artisan [comando]`
+
+### Resolución de Problemas Docker
+
+**Si el contenedor no inicia:**
+```bash
+docker-compose logs app
+```
+
+**Si hay problemas de permisos:**
+```bash
+docker-compose exec app chown -R 9999:9999 /var/www/html/storage
+```
+
+**Si Redis no conecta:**
+```bash
+docker-compose exec app php artisan tinker
+>>> Redis::ping()
+```
