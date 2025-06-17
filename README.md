@@ -7,6 +7,7 @@ Este es un proyecto Laravel creado con la última versión del framework (Larave
 - PHP 8.3.11 o superior
 - Composer 2.8.5 o superior
 - Node.js y npm
+- Docker Desktop
 - Extensiones de PHP: bcmath, ctype, fileinfo, json, mbstring, openssl, PDO, tokenizer, xml
 
 ## Instalación
@@ -35,6 +36,68 @@ Este es un proyecto Laravel creado con la última versión del framework (Larave
 
 5. **Configurar la base de datos:**
    Edita el archivo `.env` con tus credenciales de base de datos.
+
+## Configuración con Docker
+
+Este proyecto incluye una configuración completa con Docker que incluye MySQL, Redis y phpMyAdmin.
+
+### Iniciar los servicios con Docker
+
+1. **Asegúrate de que Docker Desktop esté ejecutándose:**
+   ```bash
+   docker --version
+   ```
+
+2. **Iniciar todos los servicios:**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **O iniciar servicios específicos:**
+   ```bash
+   docker-compose up -d mysql redis phpmyadmin
+   ```
+
+### Servicios Disponibles
+
+- **MySQL 8.0**: Puerto 3306
+  - Base de datos: `eunoia`
+  - Usuario: `root`
+  - Contraseña: `password`
+
+- **Redis 7.4.4**: Puerto 6379
+  - Usado para cache y colas de trabajo
+  - Sin autenticación por defecto
+
+- **phpMyAdmin**: Puerto 8080
+  - Acceso web: http://localhost:8080
+  - Gestión de base de datos MySQL
+
+### Comandos Docker Útiles
+
+- **Ver contenedores activos:** `docker ps`
+- **Ver logs de un servicio:** `docker-compose logs [servicio]`
+- **Detener servicios:** `docker-compose down`
+- **Reiniciar un servicio:** `docker-compose restart [servicio]`
+- **Acceder al CLI de Redis:** `docker exec -it eunoia-redis-1 redis-cli`
+- **Acceder al CLI de MySQL:** `docker exec -it eunoia-mysql-1 mysql -u root -p`
+
+### Verificación de Servicios
+
+Para verificar que todo funciona correctamente:
+
+```bash
+# Verificar Redis
+docker exec -it eunoia-redis-1 redis-cli ping
+# Debería responder: PONG
+
+# Verificar MySQL
+docker exec eunoia-mysql-1 mysqladmin -u root -ppassword ping
+# Debería responder: mysqld is alive
+
+# Ver información de Redis
+docker exec -it eunoia-redis-1 redis-cli info server
+```
 
 ## Desarrollo
 
@@ -74,25 +137,37 @@ npm run build
 
 ## Estado Actual
 
-✅ Laravel 12.18.0 instalado y configurado
-✅ Servidor de desarrollo funcionando
-✅ Dependencias de Composer instaladas
-✅ Dependencias de npm instaladas
-✅ Archivo .env configurado
-✅ Clave de aplicación generada
+✅ Laravel 12.18.0 instalado y configurado  
+✅ Servidor de desarrollo funcionando  
+✅ Dependencias de Composer instaladas  
+✅ Dependencias de npm instaladas  
+✅ Archivo .env configurado  
+✅ Clave de aplicación generada  
+✅ Docker Desktop configurado y funcionando  
+✅ MySQL 8.0 ejecutándose en Docker (Puerto 3306)  
+✅ Redis 7.4.4 ejecutándose en Docker (Puerto 6379)  
+✅ phpMyAdmin accesible en http://localhost:8080  
+✅ Conectividad Redis verificada  
+✅ Base de datos MySQL operativa
 
 ## Próximos Pasos
 
-1. Configurar una base de datos (MySQL, PostgreSQL, etc.)
+1. ✅ ~~Configurar una base de datos (MySQL, PostgreSQL, etc.)~~ - **Completado con Docker**
 2. Ejecutar migraciones: `php artisan migrate`
 3. Configurar autenticación si es necesario
 4. Desarrollar la funcionalidad específica del proyecto
+5. Configurar Redis para cache y colas de trabajo
+6. Implementar sistema de autenticación y autorización
 
 ---
 
 **Versión Laravel:** 12.18.0  
 **Versión PHP:** 8.3.11  
-**Fecha de instalación:** 17 de junio de 2025
+**Docker:** 28.0.4  
+**MySQL:** 8.0.42  
+**Redis:** 7.4.4  
+**Fecha de instalación:** 17 de junio de 2025  
+**Última actualización:** 17 de junio de 2025 - Configuración Docker completada
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
