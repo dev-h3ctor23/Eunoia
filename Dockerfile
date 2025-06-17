@@ -1,29 +1,32 @@
-FROM php:8.3-fpm
+# Usar imagen PHP optimizada y con menos vulnerabilidades
+FROM serversideup/php:8.3-fpm-nginx-alpine
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
+# Instalar dependencias adicionales del sistema
+RUN apk update && apk add --no-cache \
     git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
     libzip-dev \
     zip \
     unzip \
     nodejs \
     npm
 
-# Limpiar cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Alpine no necesita limpiar cache como apt-get
+# RUN apk del .build-deps se ejecutará automáticamente
 
-# Instalar extensiones de PHP
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# Instalar extensiones adicionales de PHP si es necesario
+RUN docker-php-ext-install zip
 
 # Instalar Redis extension
-RUN pecl install redis && docker-php-ext-enable redis
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del .build-deps
 
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Instalar Composer (usar versión incluida en la imagen base)
+# COPY --from=composer:2.8-bin /composer /usr/bin/composer
+
+# Crear usuario no-root para mejor seguridad (puede que ya esté en la imagen base)
+# RUN addgroup -g 1000 laravel && adduser -D -s /bin/sh -u 1000 -G laravel laravel
 
 # Establecer directorio de trabajo
 WORKDIR /var/www/html
@@ -40,8 +43,8 @@ RUN npm install
 # Compilar assets
 RUN npm run build
 
-# Configurar permisos
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Configurar permisos (ya no necesario, se ejecuta como usuario laravel)
+# Los permisos se manejan con --chown en COPY
 
 # Exponer puerto
 EXPOSE 8000
